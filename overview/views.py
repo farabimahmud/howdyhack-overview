@@ -13,9 +13,11 @@ from . import overview
 def index(request):
     topics = ["football","covid", "BLM", "student", "online" ,"dog"]
     scores = overview.get_scores()
+    day_wise_scores = overview.get_daywise_score()
     context = {
         "topics" : topics,
-        "scores" : scores
+        "scores" : scores,
+        "day_wise_score" : day_wise_scores,
     }
     return render(request, "overview.html", context)
 
