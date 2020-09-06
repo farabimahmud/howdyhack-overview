@@ -4,3 +4,6 @@ django-cleanup==2.1.0
 django-crispy-forms==1.7.2
 django-heroku
 gunicorn==20.0.4
+pandas 
+numpy
+
