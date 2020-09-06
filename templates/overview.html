@@ -21,16 +21,16 @@
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
     
         // The data for our dataset
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May'],
+            labels: {{topics | safe}},
             datasets: [{
-                label: 'My First dataset',
+                label: 'TAMU Twitter Sentiment on Extracted Topics during August',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data:  {{dataframe | safe}}
+                data:  {{scores | safe}}
             }]
         },
     
