@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h3>Dashboard</h3>
+<hr>
+<p>
+    Welcome, <small>{{request.user.username}}</small>
+</p>
+
+
+<canvas id="myChart"></canvas>
+ 
+{% if context %}
+
+{% else %}
+
+
+{% endif %} 
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+    
+        // The data for our dataset
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data:  {{dataframe | safe}}
+            }]
+        },
+    
+        // Configuration options go here
+        options: {}
+    });
+</script>
+
+{% endblock body %}
+

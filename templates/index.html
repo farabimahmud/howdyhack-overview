@@ -3,16 +3,16 @@
 {% block body %}
 
 <div class="jumbotron text-center">
-        <h3>Yazılım Bilimi Bloğuna Hoşgeldiniz</h3>
-        <p>Bu blogta geliştiriciler olarak blog yazılarınızı paylaşabilirsiniz ve insanlara yardımcı olabilirsiniz.</p>
+        <h3>Welcome to our project website</h3>
+        <p>You can see some magic happening with the power of Machine Learning</p>
 </div>
 
 
 <p>
         {% if request.user.is_authenticated %}
-                Giriş Yapılmış, {{request.user.username}}
+                Welcome, {{request.user.username}}
         {% else %}
-                Giriş Yapılmamış
+                
         {% endif %}
 
 </p>
