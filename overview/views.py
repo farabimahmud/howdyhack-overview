@@ -13,11 +13,13 @@ from . import overview
 def index(request):
     topics = ["football","covid", "BLM", "student", "online" ,"dog"]
     scores = overview.get_scores()
+    
     day_wise_scores = overview.get_daywise_score()
-    context = {
-        "topics" : topics,
-        "scores" : scores,
-        "day_wise_score" : day_wise_scores,
-    }
+    context = {}
+    context['topics']  = topics
+    context['scores'] = scores
+    context['data'] = overview.formatted_data_for_chart(day_wise_scores)
+    context['dates'] = overview.get_name_range_for_dates()
+    context['range'] = range(0,6)
     return render(request, "overview.html", context)
 

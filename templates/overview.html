@@ -10,7 +10,6 @@
 
 <canvas id="myChart"></canvas>
 
-
 <canvas id="linechart"></canvas>
 
 {% if context %}
@@ -19,7 +18,6 @@
 
 
 {% endif %} 
-
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
@@ -28,7 +26,7 @@
     
         // The data for our dataset
         data: {
-            labels: {{topics | safe}},
+            labels: {{ topics | safe}},
             datasets: [{
                 label: 'TAMU Twitter Sentiment on Extracted Topics during August',
                 backgroundColor: 'rgb(255, 99, 132)',
@@ -40,29 +38,32 @@
         // Configuration options go here
         options: {}
     });
-</script>
+</script> 
+
+
 
 <script>
-    var ctx = document.getElementById('linechart').getContext('2d');
+    var ctx = document.getElementById("linechart").getContext('2d');
     var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
     
         // The data for our dataset
         data: {
-            labels: {{topics | safe}},
-            datasets: [{
-                label: 'TAMU Twitter Sentiment on Extracted Topics during August',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data:  {{ day_wise_score | safe}}
-            }]
+            labels: {{ dates | safe }},
+            datasets: [
+            {% for i in data %}
+            {{ i | safe}} ,
+            {% endfor %}
+            ]
         },
     
         // Configuration options go here
         options: {}
     });
 </script>
+
+
 
 {% endblock body %}
 

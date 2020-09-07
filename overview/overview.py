@@ -11,23 +11,22 @@ def get_scores():
 
 
 def get_daywise_score():
-    df = pd.read_csv("daily_data.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/farabimahmud/howdyhack-overview/master/overview/daily_data.csv")
 
     mean_scores = df.groupby(['prediction', 'date']).mean()
     mean_scores = mean_scores.reset_index()
 
 
     df[['date']] = mean_scores['date'].apply(get_date)
-    scores = []
+    scores = {}
 
     cutoff_date = datetime.date(2020, 9, 1)
 
-    topics = ['football', 'covid', 'blm', 'student', 'online', 'dog']
+    topics = ['football', 'covid', 'BLM', 'student', 'online', 'dog']
     for i in range(len(topics)):
         filter_before_cutoff = df['date'] < cutoff_date
         filter_same_class = df['prediction'] == i+1
-        scores.append(df[filter_same_class][filter_before_cutoff]
-                    ['score'].values.tolist())
+        scores[topics[i]] = df[filter_same_class][filter_before_cutoff]['score'].values.tolist()
     return scores
 
 
@@ -43,5 +42,47 @@ def get_date(s):
         pass
     return datetime.date(l[0], l[1], l[2])
 
-print(get_daywise_score())
-print(len(get_daywise_score()))
+def get_name_range_for_dates():
+    n = 31
+    m = 8
+    dates = []
+    for i in range(n):
+        dates.append("{:02}-{:02}".format(m, i+1))
+    return dates
+
+
+def formatted_data_for_chart(scores):
+    '''
+    label: 
+                // backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data:  {{ }}
+    '''
+    data = list()
+    topics = ['football', 'covid', 'BLM', 'student', 'online', 'dog']
+    colors = [
+        'rgb(255, 99, 132)',
+        'rgb(0, 99, 100)',
+        'rgb(100, 99, 0)',
+        'rgb(255, 0, 132)',
+        'rgb(255, 0, 255)',
+        'rgb(100, 100, 132)',
+    ]
+    for i in range(len(topics)):
+        data.append(
+            {
+                'label': topics[i],
+                'borderColor' : colors[i],
+                'data' : scores[topics[i]],
+                'fill' : 'false',
+            }
+        )
+        
+    return data 
+
+# print(get_daywise_score())
+# print(len(get_daywise_score()))
+# from pprint import pprint
+
+# pprint(formatted_data_for_chart(get_daywise_score()))
+
